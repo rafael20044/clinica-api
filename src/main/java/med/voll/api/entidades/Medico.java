@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import med.voll.api.dto.MedicoActualizar;
 import med.voll.api.dto.MedicoDTO;
 import med.voll.api.modelos.Direccion;
 import med.voll.api.modelos.Especialidad;
@@ -39,9 +40,27 @@ public class Medico {
     private Especialidad especialidad;
     @Embedded
     private Direccion direccion;
+    private Boolean estaActivo;
     
     public Medico(MedicoDTO dto){
-        this(dto.id(), dto.nombre(),dto.email(), dto.documento(), dto.especialidad(),
-                new Direccion(dto.direccion()));
+        this.nombre = dto.nombre();
+        this.email = dto.email();
+        this.documento = dto.documento();
+        this.especialidad = dto.especialidad();
+        this.direccion = new Direccion(dto.direccion());
+        this.estaActivo = true;
+    }
+    
+    public void actualizar(MedicoActualizar actualizar){
+        
+        if (actualizar.nombre() != null) {
+            this.nombre = actualizar.nombre();
+        }
+        if (actualizar.documento()!= null) {
+            this.documento = actualizar.documento();
+        }
+        if (actualizar.direccion()!= null) {
+            this.direccion = direccion.actualizar(actualizar.direccion());
+        }
     }
 }

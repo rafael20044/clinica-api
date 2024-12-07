@@ -1,6 +1,7 @@
 package med.voll.api.servicios.imp;
 
 import java.util.Optional;
+import med.voll.api.dto.MedicoActualizar;
 import med.voll.api.dto.MedicoDTO;
 import med.voll.api.entidades.Medico;
 import med.voll.api.repositorio.MedicoRepositorio;
@@ -30,19 +31,13 @@ public class MedicoServicio implements IMedicoServicio {
     }
 
     @Override
-    public MedicoDTO buscar(Long id) {
-        Optional<Medico> medicoBuscar = buscarEntidad(id);
-        if (medicoBuscar.isPresent()) {
-            Medico m = medicoBuscar.get();
-            MedicoDTO dto = new MedicoDTO(m);
-            return dto;
-        }
-        return null;
+    public Optional<MedicoDTO> buscar(Long id) {
+        return repositorio.findById(id).map(MedicoDTO::new);
     }
 
     @Override
     public Page<MedicoDTO> buscarTodos(Pageable paginacion) {
-        return repositorio.findAll(paginacion).map(MedicoDTO::new);
+        return repositorio.findByEstaActivoTrue(paginacion).map(MedicoDTO::new);
     }
 
     @Override
@@ -52,7 +47,25 @@ public class MedicoServicio implements IMedicoServicio {
 
     @Override
     public Optional<Medico> buscarEntidad(Long id) {
-        return repositorio.findById(id).or(null);
+        return repositorio.findById(id);
+    }
+
+    @Override
+    public void actualizar(MedicoActualizar actualizar) {
+        Optional<Medico> m = buscarEntidad(actualizar.id());
+        if (m.isPresent()) {
+            Medico medico = m.get();
+            medico.actualizar(actualizar);
+        }
+    }
+
+    @Override
+    public void borrarLogico(Long id) {
+        Optional<Medico> medico = buscarEntidad(id);
+        if (medico.isPresent()) {
+            Medico m = medico.get();
+            m.setEstaActivo(false);
+        }
     }
 
 }
