@@ -2,7 +2,9 @@ package med.voll.api.servicios;
 
 import java.util.List;
 import java.util.Optional;
+import med.voll.api.dto.MedicoDTO;
 import med.voll.api.entidades.Medico;
+
 
 /**
  *
@@ -10,11 +12,13 @@ import med.voll.api.entidades.Medico;
  */
 public interface IMedicoServicio {
     
-    public void guardar(Medico medico);
+    public void guardar(MedicoDTO dto);
     
-    public Optional<Medico> buscarPorID(Long id);
+    public MedicoDTO buscar(Long id);
     
-    public List<Medico> buscarTodos();
+    public List<MedicoDTO> buscarTodos();
     
     public void borrar(Long id);
+    
+    public Optional<Medico> buscarEntidad(Long id);
 }
