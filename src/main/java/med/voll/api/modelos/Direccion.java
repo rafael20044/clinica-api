@@ -4,6 +4,7 @@ import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import med.voll.api.dto.DireccionDTO;
 
 /**
  *
@@ -20,5 +21,9 @@ public class Direccion {
     private String complemento;
     private String distrito;
     private String ciudad;
+    
+    public Direccion(DireccionDTO dto){
+        this(dto.calle(), dto.numero(), dto.complemento(), dto.distrito(), dto.ciudad());
+    }
     
 }

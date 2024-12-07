@@ -9,8 +9,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import med.voll.api.dto.MedicoDTO;
 import med.voll.api.modelos.Direccion;
 import med.voll.api.modelos.Especialidad;
 
@@ -21,7 +23,8 @@ import med.voll.api.modelos.Especialidad;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 public class Medico {
     
     @Id
@@ -36,4 +39,9 @@ public class Medico {
     private Especialidad especialidad;
     @Embedded
     private Direccion direccion;
+    
+    public Medico(MedicoDTO dto){
+        this(dto.id(), dto.nombre(),dto.email(), dto.documento(), dto.especialidad(),
+                new Direccion(dto.direccion()));
+    }
 }

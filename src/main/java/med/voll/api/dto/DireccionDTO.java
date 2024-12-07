@@ -1,6 +1,7 @@
 package med.voll.api.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import med.voll.api.modelos.Direccion;
 
 /**
  *
@@ -19,5 +20,9 @@ public record DireccionDTO(
         String ciudad
         
         ) {
+    
+    public DireccionDTO(Direccion d){
+        this(d.getCalle(), d.getNumero(), d.getComplemento(), d.getDistrito(), d.getCiudad());
+    }
     
 }
